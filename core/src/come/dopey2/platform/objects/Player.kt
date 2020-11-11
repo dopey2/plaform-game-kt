@@ -8,7 +8,6 @@ import come.dopey2.platform.tools.GraphicsHelper
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.Sprite
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.utils.Array
@@ -17,10 +16,6 @@ class Player : GraphicsHelper, ContactListener {
 
     val batch: Batch
     private val world: World
-
-    private val idleSprite = mutableListOf<Sprite>()
-    private val runSprite = mutableListOf<Sprite>()
-    private val jumpSprite = mutableListOf<Sprite>()
 
     private val idleAnimation: Animation<Sprite>
     private val runAnimation: Animation<Sprite>
@@ -55,6 +50,10 @@ class Player : GraphicsHelper, ContactListener {
         this.world = world.apply {
             setContactListener(this@Player)
         }
+
+        val idleSprite = mutableListOf<Sprite>()
+        val runSprite = mutableListOf<Sprite>()
+        val jumpSprite = mutableListOf<Sprite>()
 
         for (i in 0..9) {
             idleSprite.add(Sprite(Texture("images/player/idle/Idle__00$i.png")))
