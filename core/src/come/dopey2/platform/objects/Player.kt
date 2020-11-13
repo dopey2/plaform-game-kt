@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.utils.Array
+import come.dopey2.platform.const.ObjectsFilter
 
 class Player : GraphicsHelper, ContactListener {
 
@@ -89,6 +90,10 @@ class Player : GraphicsHelper, ContactListener {
         body.isFixedRotation = true
     }
 
+    public fun getY(): Float {
+        return body.position.y
+    }
+
     fun playerControl() {
         val vector2 = Vector2(0f, 0f)
 
@@ -124,20 +129,21 @@ class Player : GraphicsHelper, ContactListener {
         } else {
             playerDirection = PlayerDirection.LEFT
         }
-
     }
 
-    fun compute(delta: Float) {
-        playerControl()
-        definePlayerState()
-
+    fun computeAnimationTime(delta: Float) {
         if(playerState == PlayerStateEnum.RUN) {
             animationTime += delta * Math.abs(body.linearVelocity.x) * 1.5f
         }
         else {
             animationTime += delta
         }
+    }
 
+    fun compute(delta: Float) {
+        playerControl()
+        definePlayerState()
+        computeAnimationTime(delta)
     }
 
 
@@ -178,15 +184,20 @@ class Player : GraphicsHelper, ContactListener {
     override fun endContact(contact: Contact?) {}
     override fun beginContact(contact: Contact?) {}
 
-    override fun preSolve(contact: Contact?, oldManifold: Manifold?) {
-        val yA = contact?.fixtureA?.body?.position?.y
-        val yB = contact?.fixtureB?.body?.position?.y
 
-        if (yA == null || yB == null) {
-            return
+    override fun preSolve(contact: Contact?, oldManifold: Manifold?) {
+
+        if(contact?.fixtureB?.filterData?.groupIndex == ObjectsFilter.Platform.toShort()) {
+            val yA = contact?.fixtureA?.body?.position?.y
+            val yB = contact?.fixtureB?.body?.position?.y
+
+            if (yA == null || yB == null) {
+                return
+            }
+
+            contact?.isEnabled = yA - ptm(height / 2) > yB
         }
 
-        contact?.isEnabled = yA - ptm(height / 2) > yB
     }
 
     override fun postSolve(contact: Contact?, impulse: ContactImpulse?) {}

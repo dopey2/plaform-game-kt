@@ -3,7 +3,6 @@ package com.dopey2.platform.desktop
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.dopey2.platform.Game
-import com.flappybird.game.res.CONSTANTS
 
 object DesktopLauncher {
     @JvmStatic

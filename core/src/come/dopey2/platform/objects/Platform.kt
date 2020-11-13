@@ -1,19 +1,15 @@
 package come.dopey2.platform.objects
 
-import com.flappybird.game.res.CONSTANTS
-
-
 import come.dopey2.platform.tools.GraphicsHelper
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.*
+import come.dopey2.platform.const.ObjectsFilter
 
 class Platform: GraphicsHelper {
 
     val batch: Batch
     private val world: World
-
-//    private val image = Texture(Gdx.files.internal("images/flappy1.png"))
 
     private val width: Float
     private val height: Float
@@ -43,6 +39,7 @@ class Platform: GraphicsHelper {
         fdef.density = 1f
         fdef.friction = 0f
         fdef.restitution = 0f
+        fdef.filter.groupIndex = ObjectsFilter.Platform.toShort()
         body.createFixture(fdef)
     }
 
