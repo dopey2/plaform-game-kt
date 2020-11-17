@@ -29,7 +29,6 @@ class Player : GraphicsHelper, ContactListener {
     private val body: Body
     private val fdef: FixtureDef
 
-
     private var animationTime = 0f
 
     private enum class PlayerStateEnum {
@@ -105,7 +104,7 @@ class Player : GraphicsHelper, ContactListener {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            vector2.y = 20 + Math.abs(body.linearVelocity.x)
+            vector2.y = 20 + (Math.abs(body.linearVelocity.x) * 1.5f)
         }
 
         if(vector2.x != 0f || vector2.y != 0f ) {
@@ -114,6 +113,18 @@ class Player : GraphicsHelper, ContactListener {
     }
 
     fun definePlayerState() {
+
+        if (body.linearVelocity.x < 0) {
+            playerDirection = PlayerDirection.RIGHT
+        } else {
+            playerDirection = PlayerDirection.LEFT
+        }
+
+
+        if(playerState == PlayerStateEnum.JUMP) {
+            return
+        }
+
         if (Math.abs(body.linearVelocity.x) < 0.3f) {
             playerState = PlayerStateEnum.IDLE
         } else {
@@ -122,12 +133,6 @@ class Player : GraphicsHelper, ContactListener {
 
         if (Math.abs(body.linearVelocity.y) > 0.3f) {
             playerState = PlayerStateEnum.JUMP
-        }
-
-        if (body.linearVelocity.x < 0) {
-            playerDirection = PlayerDirection.RIGHT
-        } else {
-            playerDirection = PlayerDirection.LEFT
         }
     }
 
@@ -181,8 +186,14 @@ class Player : GraphicsHelper, ContactListener {
 
     }
 
-    override fun endContact(contact: Contact?) {}
-    override fun beginContact(contact: Contact?) {}
+    override fun endContact(contact: Contact?) {
+
+    }
+    override fun beginContact(contact: Contact?) {
+        if (contact?.fixtureB?.filterData?.groupIndex == ObjectsFilter.Platform.toShort()) {
+            playerState = PlayerStateEnum.RUN
+        }
+    }
 
 
     override fun preSolve(contact: Contact?, oldManifold: Manifold?) {
