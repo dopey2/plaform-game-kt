@@ -43,6 +43,13 @@ class Platform: GraphicsHelper {
         body.createFixture(fdef)
     }
 
+    fun getY(): Float{
+        return body.position.y
+    }
+
+    fun removeBody(){
+        world.destroyBody(body)
+    }
 
 //    override fun draw(delta: Float) {
 //        batch.draw(

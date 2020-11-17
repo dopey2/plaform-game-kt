@@ -25,7 +25,6 @@ class GameScreen(val game: Game) : KtxScreen, GraphicsHelper {
 
     private val player = Player(game.batch, world)
     private val platformGenerator = PlatformGenerator(game, world, player)
-    private val sideWall = SideWall(game.batch, world)
 
 
     private val FPS = 60
@@ -72,11 +71,7 @@ class GameScreen(val game: Game) : KtxScreen, GraphicsHelper {
         player.compute(delta)
         platformGenerator.compute(delta)
 
-        System.out.println("y " + player.getY())
-
-
     }
-
 
     override fun show() {}
     override fun dispose() {}

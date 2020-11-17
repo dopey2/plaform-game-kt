@@ -65,7 +65,7 @@ class Player : GraphicsHelper, ContactListener {
         runAnimation = Animation(0.3f, Array(runSprite.toTypedArray()), Animation.PlayMode.LOOP)
         jumpAnimation = Animation(0.03f, Array(jumpSprite.toTypedArray()), Animation.PlayMode.NORMAL)
 
-        val y = 240f - height / 2
+        val y = 100 - height / 2
         val x = 400f - width
 
         bodyDef = BodyDef().apply {
