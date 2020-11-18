@@ -84,6 +84,7 @@ class Player : GraphicsHelper, ContactListener {
         fdef.density = 1f
         fdef.friction = 1f
         fdef.restitution = 0f
+        fdef.filter.groupIndex = ObjectsFilter.Player.toShort()
 
         body.createFixture(fdef)
         body.isFixedRotation = true
@@ -104,7 +105,7 @@ class Player : GraphicsHelper, ContactListener {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            vector2.y = 20 + (Math.abs(body.linearVelocity.x) * 1.5f)
+            vector2.y = 22 + (Math.abs(body.linearVelocity.x) * 1.5f)
         }
 
         if(vector2.x != 0f || vector2.y != 0f ) {
@@ -190,6 +191,8 @@ class Player : GraphicsHelper, ContactListener {
 
     }
     override fun beginContact(contact: Contact?) {
+
+
         if (contact?.fixtureB?.filterData?.groupIndex == ObjectsFilter.Platform.toShort()) {
             playerState = PlayerStateEnum.RUN
         }
@@ -199,6 +202,8 @@ class Player : GraphicsHelper, ContactListener {
     override fun preSolve(contact: Contact?, oldManifold: Manifold?) {
 
         if(contact?.fixtureB?.filterData?.groupIndex == ObjectsFilter.Platform.toShort()) {
+
+
             val yA = contact?.fixtureA?.body?.position?.y
             val yB = contact?.fixtureB?.body?.position?.y
 
@@ -206,7 +211,12 @@ class Player : GraphicsHelper, ContactListener {
                 return
             }
 
-            contact?.isEnabled = yA - ptm(height / 2) > yB
+            contact?.isEnabled = false
+
+            if(yA - ptm(height / 2) > yB) {
+                contact?.isEnabled = true
+            }
+
         }
 
     }

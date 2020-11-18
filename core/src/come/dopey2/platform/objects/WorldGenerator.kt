@@ -1,25 +1,26 @@
 package come.dopey2.platform.objects
 
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.World
-import com.dopey2.platform.Game
 import come.dopey2.platform.tools.GraphicsHelper
 
-class PlatformGenerator(
-        private val game: Game,
+class WorldGenerator(
+        private val batch: Batch,
         private var world: World,
         private var player: Player
-
 ) : GraphicsHelper {
 
     private val platforms = mutableListOf<Platform>().apply {
-        add(Platform(game.batch, world, 0f, 0f, CONSTANTS.width, 20f))
+        add(Platform(batch, world, 0f, 0f, CONSTANTS.width, 20f))
     }
 
     private val sideWalls = mutableListOf<SideWall>()
+    private val plants = mutableListOf<Plant>()
+
 
     private var lastPlatformY = 0f
-    private val platformDistance = 100f
+    private val platformDistance = 115f
 
     private var lastSideWallY = 0f
 
@@ -28,6 +29,13 @@ class PlatformGenerator(
         spawnSideWall()
         destroyOutOfTheScreenPlatform()
         destroyOutOfTheScreenSideWalls()
+        Plant.compute(delta)
+    }
+
+    fun draw(delta: Float): Unit {
+        platforms.forEach { it.draw(delta) }
+
+        plants.reversed().forEach { it.draw(delta) }
     }
 
     fun spawnPlatform() {
@@ -39,7 +47,7 @@ class PlatformGenerator(
 
     fun spawnSideWall() {
         if (mtp(player.getY()) + CONSTANTS.height > lastSideWallY) {
-            sideWalls.add(SideWall(game.batch, world, lastSideWallY))
+            sideWalls.add(SideWall(batch, world, lastSideWallY))
             lastSideWallY += CONSTANTS.height
         }
     }
@@ -48,8 +56,16 @@ class PlatformGenerator(
         val width = MathUtils.random(150f, 350f)
         val x = MathUtils.random(0f, CONSTANTS.width - (width + 30f))
 
+
+        var plantX = MathUtils.random(150f,150f)
+
+
+        plants.add(Plant(batch, plantX, lastPlatformY + platformDistance - 5))
+
+
+
         return Platform(
-                game.batch,
+                batch,
                 world,
                 x,
                 lastPlatformY + platformDistance,

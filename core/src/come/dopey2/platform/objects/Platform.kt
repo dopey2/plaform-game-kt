@@ -1,10 +1,12 @@
 package come.dopey2.platform.objects
 
+import com.badlogic.gdx.graphics.Texture
 import come.dopey2.platform.tools.GraphicsHelper
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.*
 import come.dopey2.platform.const.ObjectsFilter
+import come.dopey2.platform.tools.AssetsLoader
 
 class Platform: GraphicsHelper {
 
@@ -40,6 +42,7 @@ class Platform: GraphicsHelper {
         fdef.friction = 0f
         fdef.restitution = 0f
         fdef.filter.groupIndex = ObjectsFilter.Platform.toShort()
+
         body.createFixture(fdef)
     }
 
@@ -51,21 +54,23 @@ class Platform: GraphicsHelper {
         world.destroyBody(body)
     }
 
-//    override fun draw(delta: Float) {
-//        batch.draw(
-//                image,
-//                body.position.x - ptm(width  / 2),
-//                body.position.y - ptm(height / 2),
-//                ptm(width),
-//                ptm(height)
-//        )
-//    }
-//
-//    fun jump() {
-//        body.applyLinearImpulse(Vector2(0f, 4f ), body.worldCenter, false)
-//    }
-//
-//    override fun dispose() {
-//        world.destroyBody(body)
-//    }
+    fun draw(delta: Float) {
+
+        var texture = AssetsLoader.platform_medium
+
+        if(width > 180 && width < 250) {
+            texture = AssetsLoader.platform_medium_large
+        }
+        else if(width > 250) {
+            texture = AssetsLoader.platform_large
+        }
+
+        batch.draw(
+                texture,
+                body.position.x - ptm(width  / 2),
+                body.position.y - ptm(height * 1.5f),
+                ptm(width),
+                ptm(height * 2.5f)
+        )
+    }
 }

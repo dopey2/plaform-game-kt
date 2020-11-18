@@ -2,6 +2,7 @@ package come.dopey2.platform.objects
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.*
+import come.dopey2.platform.const.ObjectsFilter
 import come.dopey2.platform.tools.GraphicsHelper
 
 class SideWall: GraphicsHelper {
@@ -22,15 +23,15 @@ class SideWall: GraphicsHelper {
 
 
         val bodyDefLeft = BodyDef().apply {
-            type = BodyDef.BodyType.KinematicBody
+            type = BodyDef.BodyType.StaticBody
             position.set(
-                    ptm(-20 + width / 2),
+                    ptm( - 20 + width / 2),
                     ptm(y + height / 2)
             )
         }
 
         val bodyDefRight = BodyDef().apply {
-            type = BodyDef.BodyType.KinematicBody
+            type = BodyDef.BodyType.StaticBody
             position.set(
                     ptm(CONSTANTS.width - 20),
                     ptm(y + height / 2)
@@ -41,14 +42,25 @@ class SideWall: GraphicsHelper {
         bodyLeft = world.createBody(bodyDefLeft)
         bodyRight = world.createBody(bodyDefRight)
 
-        val fdef = FixtureDef()
-        fdef.shape = PolygonShape().apply { setAsBox(ptm(width / 2), ptm(height / 2)) }
-        fdef.density = 1f
-        fdef.friction = 0f
-        fdef.restitution = 1f
+        val fdefLeft = FixtureDef()
+        fdefLeft.shape = PolygonShape().apply { setAsBox(ptm(width / 2), ptm(height / 2)) }
+        fdefLeft.density = 1f
+        fdefLeft.friction = 0f
+        fdefLeft.restitution = 1f
+        fdefLeft.filter.groupIndex = ObjectsFilter.SideWallLeft.toShort()
 
-        bodyLeft.createFixture(fdef)
-        bodyRight.createFixture(fdef)
+        val fdefRight = FixtureDef()
+        fdefRight.shape = PolygonShape().apply { setAsBox(ptm(width / 2), ptm(height / 2)) }
+        fdefRight.density = 1f
+        fdefRight.friction = 0f
+        fdefRight.restitution = 1f
+        fdefRight.filter.groupIndex = ObjectsFilter.SideWallRight.toShort()
+
+        bodyLeft.createFixture(fdefLeft)
+        bodyRight.createFixture(fdefRight)
+
+
+
     }
 
     fun getY(): Float {
@@ -59,5 +71,4 @@ class SideWall: GraphicsHelper {
         world.destroyBody(bodyLeft)
         world.destroyBody(bodyRight)
     }
-
 }

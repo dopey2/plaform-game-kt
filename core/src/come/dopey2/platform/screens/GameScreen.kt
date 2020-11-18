@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
 import com.dopey2.platform.Game
-import come.dopey2.platform.objects.Platform
-import come.dopey2.platform.objects.PlatformGenerator
+import come.dopey2.platform.objects.WorldGenerator
 import come.dopey2.platform.objects.Player
-import come.dopey2.platform.objects.SideWall
+import come.dopey2.platform.tools.AssetsLoader
 import come.dopey2.platform.tools.GraphicsHelper
 import ktx.app.KtxScreen
 import ktx.graphics.use
@@ -24,13 +23,18 @@ class GameScreen(val game: Game) : KtxScreen, GraphicsHelper {
     private val world = World(Vector2(0f, -16f), false)
 
     private val player = Player(game.batch, world)
-    private val platformGenerator = PlatformGenerator(game, world, player)
+    private val platformGenerator = WorldGenerator(game.batch, world, player)
 
 
     private val FPS = 60
     private var start = false
 
     val debugRenderer = Box2DDebugRenderer()
+
+
+    init {
+        AssetsLoader.init()
+    }
 
     override fun render(delta: Float) {
         draw(delta)
@@ -41,10 +45,11 @@ class GameScreen(val game: Game) : KtxScreen, GraphicsHelper {
         camera.update()
         game.batch?.projectionMatrix = camera.combined
 
-        debugRenderer.render(world, camera.combined);
+        //debugRenderer.render(world, camera.combined);
 
         game.batch.use {
             player.draw(delta)
+            platformGenerator.draw(delta)
         }
     }
 
@@ -55,7 +60,7 @@ class GameScreen(val game: Game) : KtxScreen, GraphicsHelper {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if (!start) {
+            if (!start && AssetsLoader.isLoaded()) {
                 start = true
             }
             if (false) {
