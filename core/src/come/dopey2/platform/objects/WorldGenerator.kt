@@ -33,9 +33,8 @@ class WorldGenerator(
     }
 
     fun draw(delta: Float): Unit {
-        platforms.forEach { it.draw(delta) }
-
         plants.reversed().forEach { it.draw(delta) }
+        platforms.forEach { it.draw(delta) }
     }
 
     fun spawnPlatform() {
@@ -56,11 +55,11 @@ class WorldGenerator(
         val width = MathUtils.random(150f, 350f)
         val x = MathUtils.random(0f, CONSTANTS.width - (width + 30f))
 
-
-        var plantX = MathUtils.random(150f,150f)
-
-
-        plants.add(Plant(batch, plantX, lastPlatformY + platformDistance - 5))
+        val numberOfPlant =  MathUtils.random(0, 8)
+        for (i in 0..numberOfPlant) {
+            var plantX =  MathUtils.random(x , x + width - 90)
+            plants.add(Plant(batch, plantX, lastPlatformY + platformDistance - 5))
+        }
 
 
 

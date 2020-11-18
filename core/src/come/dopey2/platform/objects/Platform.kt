@@ -1,6 +1,5 @@
 package come.dopey2.platform.objects
 
-import com.badlogic.gdx.graphics.Texture
 import come.dopey2.platform.tools.GraphicsHelper
 
 import com.badlogic.gdx.graphics.g2d.Batch

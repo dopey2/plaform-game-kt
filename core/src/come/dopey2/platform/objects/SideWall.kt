@@ -59,8 +59,6 @@ class SideWall: GraphicsHelper {
         bodyLeft.createFixture(fdefLeft)
         bodyRight.createFixture(fdefRight)
 
-
-
     }
 
     fun getY(): Float {
