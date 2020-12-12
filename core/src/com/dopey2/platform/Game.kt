@@ -2,7 +2,7 @@ package com.dopey2.platform
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import come.dopey2.platform.screens.GameScreen
+import com.dopey2.platform.screens.GameScreen
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 

@@ -1,4 +1,4 @@
-package come.dopey2.platform.tools
+package com.dopey2.platform.tools
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation

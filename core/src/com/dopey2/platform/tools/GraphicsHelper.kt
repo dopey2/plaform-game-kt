@@ -1,4 +1,4 @@
-package come.dopey2.platform.tools
+package com.dopey2.platform.tools
 
 interface GraphicsHelper {
     fun ptm(pixel: Int): Float {

@@ -1,11 +1,11 @@
-package come.dopey2.platform.objects
+package com.dopey2.platform.objects
 
-import come.dopey2.platform.tools.GraphicsHelper
+import com.dopey2.platform.tools.GraphicsHelper
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.physics.box2d.*
-import come.dopey2.platform.const.ObjectsFilter
-import come.dopey2.platform.tools.AssetsLoader
+import com.dopey2.platform.const.ObjectsFilter
+import com.dopey2.platform.tools.AssetsLoader
 
 class Platform: GraphicsHelper {
 

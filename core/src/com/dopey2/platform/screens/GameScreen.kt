@@ -1,4 +1,4 @@
-package come.dopey2.platform.screens
+package com.dopey2.platform.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
 import com.dopey2.platform.Game
-import come.dopey2.platform.objects.WorldGenerator
-import come.dopey2.platform.objects.Player
-import come.dopey2.platform.tools.AssetsLoader
-import come.dopey2.platform.tools.GraphicsHelper
+import com.dopey2.platform.objects.WorldGenerator
+import com.dopey2.platform.objects.Player
+import com.dopey2.platform.tools.AssetsLoader
+import com.dopey2.platform.tools.GraphicsHelper
 import ktx.app.KtxScreen
 import ktx.graphics.use
 

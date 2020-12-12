@@ -1,4 +1,4 @@
-package come.dopey2.platform.const
+package com.dopey2.platform.const
 
 object ObjectsFilter {
     const val Player = 0

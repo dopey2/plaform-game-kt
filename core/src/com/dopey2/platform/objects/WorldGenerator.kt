@@ -1,9 +1,9 @@
-package come.dopey2.platform.objects
+package com.dopey2.platform.objects
 
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.World
-import come.dopey2.platform.tools.GraphicsHelper
+import com.dopey2.platform.tools.GraphicsHelper
 
 class WorldGenerator(
         private val batch: Batch,
